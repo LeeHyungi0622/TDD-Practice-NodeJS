@@ -1,6 +1,22 @@
 const express = require('express');
 const productRoutes = require('./routes/products.route');
 const globalRoutes = require('./routes/global.route');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+// mongoose를 사용해서 nodejs와 mongodb를 연결
+mongoose.connect(process.env.MONGO_URL, {
+        // 경고문구가 뜨지 않게 하기 위해서 아래 useNewUrlParser를 true로 설정
+        useNewUrlParser: true,
+        // Cluster의 모든 서버 모니터링을 처리하는 방법에 대한 refactoring 도입
+        // 새로운 서버 검색 및 모니터링 엔진을 사용하기 위해 아래의 옵션 추가
+        useUnifiedTopology: true
+            // MongoDB에 연결을 성공했을때,
+    }).then(() => console.log('Mongo DB is connected'))
+    // MongoDB에 연결을 실패했을때,
+    .catch(err => console.log(err));
 
 const PORT = 5000;
 
